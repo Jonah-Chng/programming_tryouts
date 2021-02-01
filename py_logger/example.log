@@ -1,0 +1,14 @@
+WARNING:root:And this, too
+ERROR:root:And non-ASCII stuff, too, like Øresund and Malmö
+WARNING:root:Indication of a problem in near future. Use Warn when client can do something, Warning when he cannot
+ERROR:root:More serious problem, and the software couldnt accomplish a task
+CRITICAL:root:Serious error. Indicate the program is unable to continue running2021-02-01 10:53:06,326 And this, too
+2021-02-01 10:53:06,326 And non-ASCII stuff, too, like Øresund and Malmö
+2021-02-01 10:53:06,327 Indication of a problem in near future. Use Warn when client can do something, Warning when he cannot
+2021-02-01 10:53:06,327 More serious problem, and the software couldnt accomplish a task
+2021-02-01 10:53:06,327 Serious error. Indicate the program is unable to continue running
+WARNING 2021-02-01 10:53:43,281 And this, too
+ERROR 2021-02-01 10:53:43,281 And non-ASCII stuff, too, like Øresund and Malmö
+WARNING 2021-02-01 10:53:43,281 Indication of a problem in near future. Use Warn when client can do something, Warning when he cannot
+ERROR 2021-02-01 10:53:43,281 More serious problem, and the software couldnt accomplish a task
+CRITICAL 2021-02-01 10:53:43,281 Serious error. Indicate the program is unable to continue running

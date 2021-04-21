@@ -18,6 +18,9 @@ class Celsius:
             raise ValueError("Temperature below -273 is not possible")
         self._temperature = value
 
+    @temperature.deleter
+    def temperature(self):
+        del self.temperature
 
 # create an object
 human = Celsius(37)
@@ -25,5 +28,6 @@ human = Celsius(37)
 print(human.temperature)
 
 print(human.to_fahrenheit())
-
-coldest_thing = Celsius(-300)
+human.temperature = 2.0
+# coldest_thing = Celsius(-300)
+del human.temperature

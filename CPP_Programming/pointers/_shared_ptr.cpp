@@ -11,12 +11,13 @@ struct MediaAsset
     virtual ~MediaAsset() = default; // make it polymorphic
 };
 
-struct Song : public MediaAsset
+struct Song : public MediaAsset,  std::enable_shared_from_this<Song>
 {
     std::wstring artist;
     std::wstring title;
     Song(const std::wstring& artist_, const std::wstring& title_) :
-        artist{ artist_ }, title{ title_ } {}
+        artist{ artist_ }, title{ title_ } {std::cout<<"Song Created"<<std::endl;}
+    ~Song(){std::cout<<"Song destructor calleld"<<std::endl;}
 };
 
 struct Photo : public MediaAsset
@@ -31,26 +32,52 @@ struct Photo : public MediaAsset
         date{ date_ }, location{ location_ }, subject{ subject_ } {}
 };
 
-using namespace std;
+std::shared_ptr<Song> keep_alive()
+{
+
+}
 
 int main()
 {
     // The examples go here, in order:
-    
-    // Use make_shared function when possible.
-    auto sp1 = make_shared<Song>(L"The Beatles", L"Im Happy Just to Dance With You");
+    {
+        Song song(L"Linkin Park", L"In the end");
+        std::cout<<"For the beatles song "<<"Im Happy Just to Dance With You"<<std::endl;
+        // Use make_shared function when possible.
+        auto sp1 = std::make_shared<Song>(L"The Beatles", L"Im Happy Just to Dance With You");
+        auto sp2 = sp1;
+        const auto& weak_ptr = std::weak_ptr<Song>(sp2);
+
+        {
+            std::cout<<"Checking address of objects being held"<<std::endl;
+            std::cout<<weak_ptr.lock().get()<<std::endl;
+            std::cout<<sp1.get()<<std::endl;
+            std::cout<<sp2.get()<<std::endl;
+            // std::cout<<<<std::endl;
+        }
+
+        {
+            std::cout<<"Address of Linkin park title "<<&song.title<<std::endl;
+            std::shared_ptr<std::wstring> sp = std::make_shared<std::wstring>(song.title);
+            std::cout<<"Address of sp to Linkin park title "<<sp.get()<<std::endl;
+            
+        }
+
+        std::cout<<"The Beatles has "<<sp1.use_count()<<" shared pointers";
+        std::cout<<" and "<<sp1.get()<<" address"<<std::endl;
+    }
 
     // Ok, but slightly less efficient. 
     // Note: Using new expression as constructor argument
     // creates no named variable for other code to access.
-    shared_ptr<Song> sp2(new Song(L"Lady Gaga", L"Just Dance"));
+    std::shared_ptr<Song> sp2(new Song(L"Lady Gaga", L"Just Dance"));
 
     // When initialization must be separate from declaration, e.g. class members, 
     // initialize with nullptr to make your programming intent explicit.
-    shared_ptr<Song> sp5(nullptr);
+    std::shared_ptr<Song> sp5(nullptr);
     //Equivalent to: shared_ptr<Song> sp5;
     //...
-    sp5 = make_shared<Song>(L"Elton John", L"I'm Still Standing");
+    sp5 = std::make_shared<Song>(L"Elton John", L"I'm Still Standing");
 
     // Example 2
     // Example 3
